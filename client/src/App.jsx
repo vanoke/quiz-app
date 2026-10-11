@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
+import MyQuizzesPage from './pages/MyQuizzesPage';
 
 function AppRoutes() {
   const { user, loading } = useAuth();
@@ -27,6 +28,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <HomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-quizzes"
+        element={
+          <ProtectedRoute role="host">
+            <MyQuizzesPage />
           </ProtectedRoute>
         }
       />

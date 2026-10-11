@@ -6,9 +6,13 @@ function getToken() {
 
 async function request(path, options = {}) {
   const headers = {
-    'Content-Type': 'application/json',
     ...options.headers,
   };
+
+  // Для FormData не ставим Content-Type — браузер сам подставит с boundary
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = 'application/json';
+  }
 
   const token = getToken();
   if (token) {
@@ -18,7 +22,12 @@ async function request(path, options = {}) {
   const response = await fetch(`${API_URL}${path}`, {
     ...options,
     headers,
-    body: options.body ? JSON.stringify(options.body) : undefined,
+    body:
+      options.body instanceof FormData
+        ? options.body
+        : options.body
+        ? JSON.stringify(options.body)
+        : undefined,
   });
 
   const data = await response.json().catch(() => ({}));
@@ -31,7 +40,22 @@ async function request(path, options = {}) {
 }
 
 export const api = {
+  // Auth
   register: (body) => request('/auth/register', { method: 'POST', body }),
   login: (body) => request('/auth/login', { method: 'POST', body }),
   me: () => request('/auth/me'),
+
+  // Quizzes
+  myQuizzes: () => request('/quizzes/my'),
+  getQuiz: (id) => request(`/quizzes/${id}`),
+  createQuiz: (body) => request('/quizzes', { method: 'POST', body }),
+  updateQuiz: (id, body) => request(`/quizzes/${id}`, { method: 'PUT', body }),
+  deleteQuiz: (id) => request(`/quizzes/${id}`, { method: 'DELETE' }),
+
+  // Upload
+  uploadImage: (file) => {
+    const form = new FormData();
+    form.append('image', file);
+    return request('/quizzes/upload', { method: 'POST', body: form });
+  },
 };
