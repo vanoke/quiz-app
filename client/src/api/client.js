@@ -31,6 +31,16 @@ async function request(path, options = {}) {
 
   const data = await response.json().catch(() => ({}));
 
+  // Если токен невалидный или прав не хватает — сбрасываем сессию
+  if (response.status === 401 || response.status === 403) {
+    localStorage.removeItem('token');
+    // Перенаправляем только если мы не на странице логина
+    if (!window.location.pathname.startsWith('/login')) {
+      window.location.href = '/login';
+    }
+    throw new Error(data.error || 'Требуется авторизация');
+  }
+
   if (!response.ok) {
     throw new Error(data.error || 'Ошибка запроса');
   }

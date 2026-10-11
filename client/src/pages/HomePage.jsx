@@ -59,7 +59,7 @@ export default function HomePage() {
               Вы вошли как <strong>организатор</strong>. Создавайте квизы и
               запускайте их для участников.
             </p>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
               <Link
                 to="/my-quizzes"
                 style={{
@@ -72,6 +72,19 @@ export default function HomePage() {
               >
                 Мои квизы
               </Link>
+              <Link
+                to="/join"
+                style={{
+                  padding: '0.8rem 1.5rem',
+                  background: 'transparent',
+                  color: '#3498db',
+                  textDecoration: 'none',
+                  border: '1px solid #3498db',
+                  borderRadius: 4,
+                }}
+              >
+                Присоединиться к квизу
+              </Link>
             </div>
           </>
         ) : (
@@ -80,9 +93,21 @@ export default function HomePage() {
               Вы вошли как <strong>участник</strong>. Подключайтесь к квизам по
               коду комнаты.
             </p>
-            <p style={{ color: '#999', marginTop: '1.5rem' }}>
-              Функция подключения к комнате появится в следующих этапах.
-            </p>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+              <Link
+                to="/join"
+                style={{
+                  padding: '0.8rem 1.5rem',
+                  background: '#3498db',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: 4,
+                  fontSize: '1.05rem',
+                }}
+              >
+                Присоединиться к квизу
+              </Link>
+            </div>
           </>
         )}
       </main>

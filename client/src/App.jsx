@@ -11,6 +11,8 @@ import QuizEditPage from './pages/QuizEditPage';
 import QuizQuestionsPage from './pages/QuizQuestionsPage';
 import HostLobbyPage from './pages/HostLobbyPage';
 import HostGamePage from './pages/HostGamePage';
+import JoinRoomPage from './pages/JoinRoomPage';
+import PlayerGamePage from './pages/PlayerGamePage';
 
 function AppRoutes() {
   const { user, loading } = useAuth();
@@ -32,6 +34,9 @@ function AppRoutes() {
 
       <Route path="/host/quizzes/:id/lobby" element={<ProtectedRoute role="host"><HostLobbyPage /></ProtectedRoute>} />
       <Route path="/host/rooms/:roomId/game" element={<ProtectedRoute role="host"><HostGamePage /></ProtectedRoute>} />
+
+      <Route path="/join" element={<ProtectedRoute><JoinRoomPage /></ProtectedRoute>} />
+      <Route path="/play/rooms/:roomId" element={<ProtectedRoute><PlayerGamePage /></ProtectedRoute>} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
