@@ -5,6 +5,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import MyQuizzesPage from './pages/MyQuizzesPage';
+import QuizCreatePage from './pages/QuizCreatePage';
+import QuizEditPage from './pages/QuizEditPage';
 
 function AppRoutes() {
   const { user, loading } = useAuth();
@@ -15,29 +17,20 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route
-        path="/login"
-        element={user ? <Navigate to="/" replace /> : <LoginPage />}
-      />
-      <Route
-        path="/register"
-        element={user ? <Navigate to="/" replace /> : <RegisterPage />}
-      />
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <HomePage />
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/login" element={user ? <Navigate to="/" replace /> : <LoginPage />} />
+      <Route path="/register" element={user ? <Navigate to="/" replace /> : <RegisterPage />} />
+      <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
       <Route
         path="/my-quizzes"
-        element={
-          <ProtectedRoute role="host">
-            <MyQuizzesPage />
-          </ProtectedRoute>
-        }
+        element={<ProtectedRoute role="host"><MyQuizzesPage /></ProtectedRoute>}
+      />
+      <Route
+        path="/quizzes/new"
+        element={<ProtectedRoute role="host"><QuizCreatePage /></ProtectedRoute>}
+      />
+      <Route
+        path="/quizzes/:id/edit"
+        element={<ProtectedRoute role="host"><QuizEditPage /></ProtectedRoute>}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
