@@ -1,0 +1,33 @@
+# Зависимости
+node_modules/
+*/node_modules/
+
+# Сборка
+dist/
+build/
+
+# Переменные окружения (секреты!)
+.env
+*.env.local
+
+# База данных SQLite
+*.db
+*.db-journal
+server/prisma/*.db
+server/prisma/*.db-journal
+
+# Загруженные файлы (не пушим картинки пользователей)
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Логи
+*.log
+npm-debug.log*
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+Thumbs.db
