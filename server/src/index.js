@@ -1,10 +1,11 @@
+import './lib/env.js';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-dotenv.config();
+import authRoutes from './routes/auth.js';
+
 
 const app = express();
 const httpServer = createServer(app);
@@ -23,6 +24,8 @@ app.use('/uploads', express.static('uploads'));
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Quiz App API работает' });
 });
+
+app.use('/api/auth', authRoutes);
 
 io.on('connection', (socket) => {
   console.log('Подключён клиент:', socket.id);

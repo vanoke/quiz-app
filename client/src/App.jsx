@@ -1,28 +1,46 @@
-import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import HomePage from './pages/HomePage';
 
-function App() {
-  const [health, setHealth] = useState(null);
+function AppRoutes() {
+  const { user, loading } = useAuth();
 
-  useEffect(() => {
-    fetch('/api/health')
-      .then((res) => res.json())
-      .then((data) => setHealth(data))
-      .catch((err) => console.error(err));
-  }, []);
+  if (loading) {
+    return <div style={{ padding: '2rem' }}>Загрузка...</div>;
+  }
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>Quiz App</h1>
-      <p>Проверка связи с сервером:</p>
-      {health ? (
-        <pre style={{ background: '#f0f0f0', padding: '1rem' }}>
-          {JSON.stringify(health, null, 2)}
-        </pre>
-      ) : (
-        <p>Загрузка...</p>
-      )}
-    </div>
+    <Routes>
+      <Route
+        path="/login"
+        element={user ? <Navigate to="/" replace /> : <LoginPage />}
+      />
+      <Route
+        path="/register"
+        element={user ? <Navigate to="/" replace /> : <RegisterPage />}
+      />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
