@@ -6,6 +6,7 @@ import { Server } from 'socket.io';
 
 import authRoutes from './routes/auth.js';
 import quizRoutes from './routes/quiz.js';
+import { setupGameSocket } from './sockets/gameSocket.js';
 
 const app = express();
 const httpServer = createServer(app);
@@ -28,12 +29,8 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/quizzes', quizRoutes);
 
-io.on('connection', (socket) => {
-  console.log('Подключён клиент:', socket.id);
-  socket.on('disconnect', () => {
-    console.log('Отключён клиент:', socket.id);
-  });
-});
+// ─── Подключаем Socket.IO логику игры ───
+setupGameSocket(io);
 
 const PORT = process.env.PORT || 3001;
 httpServer.listen(PORT, () => {
