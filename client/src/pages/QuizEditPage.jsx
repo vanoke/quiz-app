@@ -57,28 +57,36 @@ export default function QuizEditPage() {
         </Link>
       </div>
 
-      <h1 style={{ marginTop: 0 }}>Редактирование квиза</h1>
-      <p style={{ color: '#666', marginBottom: '2rem' }}>
-        Вопросов в квизе: <strong>{quiz.questions?.length || 0}</strong>
-      </p>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '1.5rem',
+          flexWrap: 'wrap',
+          gap: '0.5rem',
+        }}
+      >
+        <h1 style={{ margin: 0 }}>Редактирование квиза</h1>
+        <Link
+          to={`/quizzes/${id}/questions`}
+          style={{
+            padding: '0.6rem 1.2rem',
+            background: '#27ae60',
+            color: 'white',
+            textDecoration: 'none',
+            borderRadius: 4,
+          }}
+        >
+          Управление вопросами ({quiz.questions?.length || 0})
+        </Link>
+      </div>
 
       <QuizForm
         initialData={quiz}
         onSubmit={handleSubmit}
         submitLabel="Сохранить изменения"
       />
-
-      <div
-        style={{
-          marginTop: '2rem',
-          paddingTop: '2rem',
-          borderTop: '1px solid #e0e0e0',
-        }}
-      >
-        <p style={{ color: '#999' }}>
-          Редактор вопросов будет доступен после создания формы (следующий подэтап).
-        </p>
-      </div>
     </div>
   );
 }

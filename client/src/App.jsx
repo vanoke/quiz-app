@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import MyQuizzesPage from './pages/MyQuizzesPage';
 import QuizCreatePage from './pages/QuizCreatePage';
 import QuizEditPage from './pages/QuizEditPage';
+import QuizQuestionsPage from './pages/QuizQuestionsPage';
 
 function AppRoutes() {
   const { user, loading } = useAuth();
@@ -31,6 +32,10 @@ function AppRoutes() {
       <Route
         path="/quizzes/:id/edit"
         element={<ProtectedRoute role="host"><QuizEditPage /></ProtectedRoute>}
+      />
+      <Route
+        path="/quizzes/:id/questions"
+        element={<ProtectedRoute role="host"><QuizQuestionsPage /></ProtectedRoute>}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

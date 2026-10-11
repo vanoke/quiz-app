@@ -9,7 +9,6 @@ async function request(path, options = {}) {
     ...options.headers,
   };
 
-  // Для FormData не ставим Content-Type — браузер сам подставит с boundary
   if (!(options.body instanceof FormData)) {
     headers['Content-Type'] = 'application/json';
   }
@@ -51,6 +50,14 @@ export const api = {
   createQuiz: (body) => request('/quizzes', { method: 'POST', body }),
   updateQuiz: (id, body) => request(`/quizzes/${id}`, { method: 'PUT', body }),
   deleteQuiz: (id) => request(`/quizzes/${id}`, { method: 'DELETE' }),
+
+  // Questions
+  createQuestion: (quizId, body) =>
+    request(`/quizzes/${quizId}/questions`, { method: 'POST', body }),
+  updateQuestion: (questionId, body) =>
+    request(`/quizzes/questions/${questionId}`, { method: 'PUT', body }),
+  deleteQuestion: (questionId) =>
+    request(`/quizzes/questions/${questionId}`, { method: 'DELETE' }),
 
   // Upload
   uploadImage: (file) => {
