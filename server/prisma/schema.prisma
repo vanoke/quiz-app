@@ -15,7 +15,9 @@ model User {
   role      String   @default("player")
   createdAt DateTime @default(now())
 
-  quizzes   Quiz[]   @relation("HostQuizzes")
+  quizzes    Quiz[]        @relation("HostQuizzes")
+  rooms      Room[]        @relation("HostRooms")
+  roomPlayers RoomPlayer[]
 }
 
 model Quiz {
@@ -33,6 +35,7 @@ model Quiz {
   host            User     @relation("HostQuizzes", fields: [hostId], references: [id], onDelete: Cascade)
 
   questions       Question[]
+  rooms           Room[]
 }
 
 model Question {
@@ -47,6 +50,7 @@ model Question {
   timeLimit   Int?
 
   answers     Answer[]
+  roomAnswers RoomAnswer[]
 }
 
 model Answer {
@@ -58,4 +62,62 @@ model Answer {
   imageUrl    String?
   isCorrect   Boolean  @default(false)
   order       Int      @default(0)
+}
+
+// ─────── ИГРОВЫЕ КОМНАТЫ ───────
+
+model Room {
+  id          String   @id @default(uuid())
+  code        String   @unique     // 6-символьный код для подключения
+  status      String   @default("waiting")   // waiting | playing | finished
+  createdAt   DateTime @default(now())
+  startedAt   DateTime?
+  finishedAt  DateTime?
+
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  hostId      String
+  host        User     @relation("HostRooms", fields: [hostId], references: [id], onDelete: Cascade)
+
+  players     RoomPlayer[]
+  answers     RoomAnswer[]
+
+  currentQuestionIndex Int @default(-1)   // -1 = ещё не начали
+}
+
+model RoomPlayer {
+  id          String   @id @default(uuid())
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  score       Int      @default(0)
+  joinedAt    DateTime @default(now())
+  finishedAt  DateTime?
+
+  answers     RoomAnswer[]
+
+  @@unique([roomId, userId])   // игрок не может войти дважды в одну комнату
+}
+
+model RoomAnswer {
+  id          String   @id @default(uuid())
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  playerId    String
+  player      RoomPlayer @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  questionId  String
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  answerIds   String   // JSON-строка с массивом ID ответов
+  isCorrect   Boolean  @default(false)
+  points      Int      @default(0)
+  answeredAt  DateTime @default(now())
+
+  @@unique([playerId, questionId])   // один ответ на вопрос от игрока
 }
