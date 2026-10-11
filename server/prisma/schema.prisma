@@ -14,4 +14,48 @@ model User {
   name      String
   role      String   @default("player")
   createdAt DateTime @default(now())
+
+  quizzes   Quiz[]   @relation("HostQuizzes")
+}
+
+model Quiz {
+  id              String   @id @default(uuid())
+  title           String
+  description     String   @default("")
+  category        String   @default("Общее")
+  coverUrl        String?
+  timePerQuestion Int      @default(30)
+  status          String   @default("draft")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  hostId          String
+  host            User     @relation("HostQuizzes", fields: [hostId], references: [id], onDelete: Cascade)
+
+  questions       Question[]
+}
+
+model Question {
+  id          String   @id @default(uuid())
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  order       Int      @default(0)
+  text        String
+  imageUrl    String?
+  type        String   @default("single")
+  timeLimit   Int?
+
+  answers     Answer[]
+}
+
+model Answer {
+  id          String   @id @default(uuid())
+  questionId  String
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  text        String
+  imageUrl    String?
+  isCorrect   Boolean  @default(false)
+  order       Int      @default(0)
 }

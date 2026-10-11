@@ -5,7 +5,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 
 import authRoutes from './routes/auth.js';
-
+import quizRoutes from './routes/quiz.js';
 
 const app = express();
 const httpServer = createServer(app);
@@ -26,6 +26,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/quizzes', quizRoutes);
 
 io.on('connection', (socket) => {
   console.log('Подключён клиент:', socket.id);
