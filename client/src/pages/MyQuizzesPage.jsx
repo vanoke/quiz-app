@@ -169,37 +169,57 @@ export default function MyQuizzesPage() {
                   display: 'flex',
                   gap: '0.5rem',
                   marginTop: 'auto',
+                  flexDirection: 'column',
                 }}
               >
-                <Link
-                  to={`/quizzes/${quiz.id}/edit`}
-                  style={{
-                    flex: 1,
-                    padding: '0.5rem',
-                    textAlign: 'center',
-                    background: '#f0f0f0',
-                    color: '#333',
-                    textDecoration: 'none',
-                    borderRadius: 4,
-                    fontSize: '0.9rem',
-                  }}
-                >
-                  Редактировать
-                </Link>
-                <button
-                  onClick={() => handleDelete(quiz.id, quiz.title)}
-                  style={{
-                    padding: '0.5rem 0.8rem',
-                    background: '#fee',
-                    color: '#c00',
-                    border: '1px solid #fcc',
-                    borderRadius: 4,
-                    cursor: 'pointer',
-                    fontSize: '0.9rem',
-                  }}
-                >
-                  Удалить
-                </button>
+                {quiz.status === 'published' && quiz._count?.questions > 0 && (
+                  <Link
+                    to={`/host/quizzes/${quiz.id}/lobby`}
+                    style={{
+                      padding: '0.5rem',
+                      textAlign: 'center',
+                      background: '#27ae60',
+                      color: 'white',
+                      textDecoration: 'none',
+                      borderRadius: 4,
+                      fontSize: '0.9rem',
+                      fontWeight: 500,
+                    }}
+                  >
+                    ▶ Запустить игру
+                  </Link>
+                )}
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <Link
+                    to={`/quizzes/${quiz.id}/edit`}
+                    style={{
+                      flex: 1,
+                      padding: '0.5rem',
+                      textAlign: 'center',
+                      background: '#f0f0f0',
+                      color: '#333',
+                      textDecoration: 'none',
+                      borderRadius: 4,
+                      fontSize: '0.9rem',
+                    }}
+                  >
+                    Редактировать
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(quiz.id, quiz.title)}
+                    style={{
+                      padding: '0.5rem 0.8rem',
+                      background: '#fee',
+                      color: '#c00',
+                      border: '1px solid #fcc',
+                      borderRadius: 4,
+                      cursor: 'pointer',
+                      fontSize: '0.9rem',
+                    }}
+                  >
+                    Удалить
+                  </button>
+                </div>
               </div>
             </div>
           ))}
