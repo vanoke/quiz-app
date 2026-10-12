@@ -6,6 +6,7 @@ import { Server } from 'socket.io';
 
 import authRoutes from './routes/auth.js';
 import quizRoutes from './routes/quiz.js';
+import historyRoutes from './routes/history.js';
 import { setupGameSocket } from './sockets/gameSocket.js';
 
 const app = express();
@@ -28,8 +29,8 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/quizzes', quizRoutes);
+app.use('/api/history', historyRoutes);
 
-// ─── Подключаем Socket.IO логику игры ───
 setupGameSocket(io);
 
 const PORT = process.env.PORT || 3001;
