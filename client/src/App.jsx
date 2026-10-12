@@ -13,6 +13,7 @@ import HostLobbyPage from './pages/HostLobbyPage';
 import HostGamePage from './pages/HostGamePage';
 import JoinRoomPage from './pages/JoinRoomPage';
 import PlayerGamePage from './pages/PlayerGamePage';
+import HistoryPage from './pages/HistoryPage';
 
 function AppRoutes() {
   const { user, loading } = useAuth();
@@ -37,6 +38,8 @@ function AppRoutes() {
 
       <Route path="/join" element={<ProtectedRoute><JoinRoomPage /></ProtectedRoute>} />
       <Route path="/play/rooms/:roomId" element={<ProtectedRoute><PlayerGamePage /></ProtectedRoute>} />
+
+      <Route path="/history" element={<ProtectedRoute><HistoryPage /></ProtectedRoute>} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

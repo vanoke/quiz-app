@@ -85,6 +85,19 @@ export default function HomePage() {
               >
                 Присоединиться к квизу
               </Link>
+              <Link
+                to="/history"
+                style={{
+                  padding: '0.8rem 1.5rem',
+                  background: 'transparent',
+                  color: '#666',
+                  textDecoration: 'none',
+                  border: '1px solid #ccc',
+                  borderRadius: 4,
+                }}
+              >
+                История
+              </Link>
             </div>
           </>
         ) : (
@@ -93,7 +106,7 @@ export default function HomePage() {
               Вы вошли как <strong>участник</strong>. Подключайтесь к квизам по
               коду комнаты.
             </p>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
               <Link
                 to="/join"
                 style={{
@@ -106,6 +119,20 @@ export default function HomePage() {
                 }}
               >
                 Присоединиться к квизу
+              </Link>
+              <Link
+                to="/history"
+                style={{
+                  padding: '0.8rem 1.5rem',
+                  background: 'transparent',
+                  color: '#666',
+                  textDecoration: 'none',
+                  border: '1px solid #ccc',
+                  borderRadius: 4,
+                  fontSize: '1.05rem',
+                }}
+              >
+                История
               </Link>
             </div>
           </>

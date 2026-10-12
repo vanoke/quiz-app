@@ -31,10 +31,8 @@ async function request(path, options = {}) {
 
   const data = await response.json().catch(() => ({}));
 
-  // Если токен невалидный или прав не хватает — сбрасываем сессию
   if (response.status === 401 || response.status === 403) {
     localStorage.removeItem('token');
-    // Перенаправляем только если мы не на странице логина
     if (!window.location.pathname.startsWith('/login')) {
       window.location.href = '/login';
     }
@@ -68,6 +66,10 @@ export const api = {
     request(`/quizzes/questions/${questionId}`, { method: 'PUT', body }),
   deleteQuestion: (questionId) =>
     request(`/quizzes/questions/${questionId}`, { method: 'DELETE' }),
+
+  // History
+  hostedHistory: () => request('/history/hosted'),
+  playedHistory: () => request('/history/played'),
 
   // Upload
   uploadImage: (file) => {
