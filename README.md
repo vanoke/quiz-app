@@ -2,44 +2,17 @@
 
 Веб-приложение для проведения квизов в реальном времени.
 
-## Стек
+**Стек:** React + Vite, Node.js + Express, Socket.IO, SQLite + Prisma, JWT.
 
-- **Frontend:** React + Vite
-- **Backend:** Node.js + Express
-- **Realtime:** Socket.IO
-- **БД:** SQLite + Prisma
-- **Auth:** JWT + bcrypt
+**Макеты:** [Figma](https://www.figma.com/design/aNsrPGWl4jJqyUh9Sp7wqd/PracticeProject?node-id=0-1&t=9LIUdyw6YqiCBF3y-1)
 
-## Структура
-
-- `client/` — фронтенд
-- `server/` — бэкенд
+**Репозиторий:** https://github.com/vanoke/quiz-app
 
 ## Запуск
 
 ### Сервер
-
-\`\`\`bash
+```bash
 cd server
 npm install
 npx prisma migrate dev
-npm run dev
-\`\`\`
-
-### Клиент
-
-\`\`\`bash
-cd client
-npm install
-npm run dev
-\`\`\`
-
-## Функциональность
-
-- Регистрация и авторизация (участники и организаторы)
-- Создание и настройка квизов
-- Вопросы с текстом и изображениями, одиночный и множественный выбор
-- Подключение к квизу по коду комнаты
-- Реальное время через WebSocket
-- Подсчёт баллов и лидерборд
-- Личный кабинет с историей
+node src/index.js
